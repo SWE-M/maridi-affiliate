@@ -229,16 +229,16 @@ export default function MarketerDashboard() {
 
             <div>
               <label className="block text-xs font-bold text-slate-400 mb-2">رقم جوال العميل</label>
-              <input
-                type="tel"
-                required
-                value={clientPhone}
-                onChange={(e) => setPhone(e.target.value)} // ملاحظة تعديل حقل الاتصال
-                onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full px-4 py-3.5 rounded-xl border border-slate-800 bg-slate-950 text-white focus:ring-2 focus:ring-sky-500 outline-none text-sm text-right"
-                placeholder="55XXXXXX"
-                dir="ltr"
-              />
+              //  بعد التعديل الصحيح:
+<input
+  type="tel"
+  required
+  value={clientPhone}
+  onChange={(e) => setClientPhone(e.target.value)}
+  className="w-full px-4 py-3.5 rounded-xl border border-slate-800 bg-slate-950 text-white focus:ring-2 focus:ring-sky-500 outline-none text-sm text-right"
+  placeholder="55XXXXXX"
+  dir="ltr"
+/>
             </div>
 
             <button
