@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+// وضعنا الروابط بشكل مباشر لكسر كاش Vercel وتخطي متغيرات البيئة المعلقة
+const supabaseUrl = 'https://jozvwzwyppwfmimsjdrc.supabase.co';
+const supabaseAnonKey = 'sb_publishable_LODz8CZiwwjmC3Mlco6E2A_6_6NmNcx';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
