@@ -140,6 +140,19 @@ export default function AdminDashboard() {
     fetchData();
   };
 
+  // دالة حذف مشروع (جديدة بالكامل)
+  const handleDeleteProject = async (projectId: number, clientName: string) => {
+    if (window.confirm(`هل أنت متأكد من حذف مشروع العميل "${clientName}" نهائياً من النظام؟`)) {
+      const { error } = await supabase.from("client_requests").delete().eq("id", projectId);
+      if (!error) {
+        alert("تم حذف المشروع بنجاح 🗑️");
+        fetchData();
+      } else {
+        alert("حدث خطأ أثناء محاولة حذف المشروع.");
+      }
+    }
+  };
+
   // دالة الموافقة على طلب السحب المالي وخصمه من رصيد المسوق
   const handleApproveWithdrawal = async (withdraw: Withdrawal) => {
     if (!window.confirm(`هل قمت بتحويل مبلغ ${withdraw.amount} ر.ق للمسوق بالفعل وتريد اعتماد الطلب برمجياً؟`)) return;
@@ -168,6 +181,19 @@ export default function AdminDashboard() {
 
     alert("✅ تم اعتماد السحب وتحديث محفظة المسوق بنجاح!");
     fetchData();
+  };
+
+  // دالة حذف طلب سحب مالي (جديدة بالكامل)
+  const handleDeleteWithdrawal = async (withdrawId: number, marketerId: string, amount: number) => {
+    if (window.confirm(`هل أنت متأكد من حذف طلب السحب التابع للمسوق (${marketerId}) بقيمة ${amount} ر.ق نهائياً؟`)) {
+      const { error } = await supabase.from("withdrawals").delete().eq("id", withdrawId);
+      if (!error) {
+        alert("تم حذف طلب السحب بنجاح 🗑️");
+        fetchData();
+      } else {
+        alert("حدث خطأ أثناء محاولة حذف طلب السحب.");
+      }
+    }
   };
 
   return (
@@ -314,29 +340,39 @@ export default function AdminDashboard() {
                           <td className="p-4 font-mono text-slate-300">{p.total_price} ر.ق</td>
                           <td className="p-4 font-mono font-bold text-emerald-400">{p.commission} ر.ق</td>
                           <td className="p-4 text-center">
-                            {p.status === "New" && (
-                              <button onClick={() => handleStartProject(p.id)} className="px-3 py-1.5 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-500 transition-all">بدء المشروع 🛠️</button>
-                            )}
-                            {p.status === "In_Progress" && editingProjectId !== p.id && (
-                              <button onClick={() => setEditingProjectId(p.id)} className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-500 transition-all">إغلاق وضخ الأرباح 💰</button>
-                            )}
-                            
-                            {/* واجهة إدخال العمولات الفورية عند الضغط على إغلاق */}
-                            {editingProjectId === p.id && (
-                              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-right space-y-3 inline-block max-w-xs">
-                                <span className="block text-[11px] font-bold text-amber-400">حساب عمولة الإغلاق لـ {p.client_name}:</span>
-                                <input type="number" placeholder="سعر المشروع الكلي" value={totalPriceInput} onChange={(e)=>setTotalPriceInput(e.target.value)} className="w-full px-2 py-1 bg-slate-900 rounded border border-slate-800 text-xs text-white"/>
-                                <input type="number" placeholder="عمولة المسوق الصافية" value={commissionInput} onChange={(e)=>setCommissionInput(e.target.value)} className="w-full px-2 py-1 bg-slate-900 rounded border border-slate-800 text-xs text-white"/>
-                                <div className="flex gap-2">
-                                  <button onClick={() => handleCompleteProject(p)} className="flex-1 py-1.5 bg-emerald-600 text-white text-[11px] font-bold rounded">تأكيد وضخ الرصيد</button>
-                                  <button onClick={() => setEditingProjectId(null)} className="px-2 py-1.5 bg-slate-800 text-slate-400 text-[11px] rounded">إلغاء</button>
+                            <div className="flex justify-center items-center gap-2">
+                              {p.status === "New" && (
+                                <button onClick={() => handleStartProject(p.id)} className="px-3 py-1.5 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-500 transition-all">بدء المشروع 🛠️</button>
+                              )}
+                              {p.status === "In_Progress" && editingProjectId !== p.id && (
+                                <button onClick={() => setEditingProjectId(p.id)} className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-500 transition-all">إغلاق وضخ الأرباح 💰</button>
+                              )}
+                              
+                              {/* واجهة إدخال العمولات الفورية عند الضغط على إغلاق */}
+                              {editingProjectId === p.id && (
+                                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-right space-y-3 inline-block max-w-xs">
+                                  <span className="block text-[11px] font-bold text-amber-400">حساب عمولة الإغلاق لـ {p.client_name}:</span>
+                                  <input type="number" placeholder="سعر المشروع الكلي" value={totalPriceInput} onChange={(e)=>setTotalPriceInput(e.target.value)} className="w-full px-2 py-1 bg-slate-900 rounded border border-slate-800 text-xs text-white"/>
+                                  <input type="number" placeholder="عمولة المسوق الصافية" value={commissionInput} onChange={(e)=>setCommissionInput(e.target.value)} className="w-full px-2 py-1 bg-slate-900 rounded border border-slate-800 text-xs text-white"/>
+                                  <div className="flex gap-2">
+                                    <button onClick={() => handleCompleteProject(p)} className="flex-1 py-1.5 bg-emerald-600 text-white text-[11px] font-bold rounded">تأكيد وضخ الرصيد</button>
+                                    <button onClick={() => setEditingProjectId(null)} className="px-2 py-1.5 bg-slate-800 text-slate-400 text-[11px] rounded">إلغاء</button>
+                                  </div>
                                 </div>
-                              </div>
-                            )}
+                              )}
 
-                            {p.status === "Completed" && (
-                              <span className="text-slate-500 text-[11px] font-medium">العمولة حُوّلت للحساب 💎</span>
-                            )}
+                              {p.status === "Completed" && (
+                                <span className="text-slate-500 text-[11px] font-medium">العمولة حُوّلت للساب 💎</span>
+                              )}
+
+                              {/* 🗑️ زر حذف المشروع المضاف حديثاً بجميع حالاته */}
+                              <button 
+                                onClick={() => handleDeleteProject(p.id, p.client_name)} 
+                                className="px-2.5 py-1.5 bg-red-950/30 text-red-400 rounded-lg text-[11px] font-bold border border-red-900/30 hover:bg-red-900/30 transition-all"
+                              >
+                                حذف 🗑️
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -361,7 +397,7 @@ export default function AdminDashboard() {
                         <th className="p-4">كود المسوق</th>
                         <th className="p-4">المبلغ المطلوب سحبه</th>
                         <th className="p-4">حالة الطلب</th>
-                        <th className="p-4 text-center">الإجراء</th>
+                        <th className="p-4 text-center">الإجراء والتحكم</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800/40 text-xs">
@@ -374,11 +410,21 @@ export default function AdminDashboard() {
                             {w.status === "Approved" && <span className="px-2 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-900 rounded text-[11px]">تم التحويل والاعتماد</span>}
                           </td>
                           <td className="p-4 text-center">
-                            {w.status === "Pending" ? (
-                              <button onClick={() => handleApproveWithdrawal(w)} className="px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-all">اعتماد وتحويل الأموال ✅</button>
-                            ) : (
-                              <span className="text-slate-500 text-[11px]">مكتمل ومغلق 📦</span>
-                            )}
+                            <div className="flex justify-center items-center gap-2">
+                              {w.status === "Pending" ? (
+                                <button onClick={() => handleApproveWithdrawal(w)} className="px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-all">اعتماد وتحويل الأموال ✅</button>
+                              ) : (
+                                <span className="text-slate-500 text-[11px]">مكتمل ومغلق 📦</span>
+                              )}
+
+                              {/* 🗑️ زر حذف طلب السحب المضاف حديثاً بجميع حالاته */}
+                              <button 
+                                onClick={() => handleDeleteWithdrawal(w.id, w.marketer_id, w.amount)} 
+                                className="px-2.5 py-1.5 bg-red-950/30 text-red-400 rounded-lg text-[11px] font-bold border border-red-900/30 hover:bg-red-900/30 transition-all"
+                              >
+                                حذف 🗑️
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
