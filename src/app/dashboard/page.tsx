@@ -229,7 +229,7 @@ export default function MarketerDashboard() {
 
             <div>
               <label className="block text-xs font-bold text-slate-400 mb-2">رقم جوال العميل</label>
-              //  بعد التعديل الصحيح:
+             
 <input
   type="tel"
   required
