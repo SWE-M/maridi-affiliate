@@ -269,7 +269,7 @@ export default function MarketerDashboard() {
               <h2 className="text-xl font-bold text-white">طلب سحب الأرباح</h2>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed mb-6">
-              يمكنك تقديم طلب سحب للمبالغ المتوفرة في رصيدك الحالي. سيتم مراجعة الطلب وتحويل المبلغ لحسابك البنكي أو عبر المحفظة الإلكترونية مباشرة.
+            يمكنك تقديم طلب سحب للمبالغ المتوفرة في رصيدك الحالي. سيتم مراجعة الطلب وتحويل المبلغ لحسابك البنكي .
             </p>
 
             <form onSubmit={handleWithdrawRequest} className="space-y-5">
