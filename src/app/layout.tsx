@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "مريدي أفلييت   ",
+  title: "مريدي أفلييت | Maridi Affiliate ",
   description: "انضم الآن كمسوق رقمي في منصة مريدي وحقق عمولات مجزية وفورية.",
 };
 
