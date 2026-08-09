@@ -32,17 +32,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col antialiased relative`}
       >
         {/* ========================================= */}
-        {/* اللوجو العائم - يظهر في جميع صفحات الموقع */}
+        {/* اللوجو العائم - تم تعديل التموضع لعدم التداخل مع النصوص */}
         {/* ========================================= */}
-        <div className="absolute top-6 right-6 md:top-8 md:right-10 z-50">
+        <div className="fixed top-4 left-4 md:top-6 md:left-6 z-10 opacity-80 hover:opacity-100 transition-opacity">
           <Link href="/">
             <Image
               src={logo}
               alt="شعار مريدي أفلييت"
               width={80}
               height={80}
-              // تصغير في الجوال (w-12) وتكبير في الكمبيوتر (md:w-16) مع ظل خفيف وتأثير عند مرور الماوس
-              className="w-14 h-14 md:w-16 md:h-16 object-contain drop-shadow-[0_0_15px_rgba(56,189,248,0.2)] hover:scale-105 transition-transform"
+              // تم تحريك موقعه لليسار بدلاً من اليمين لتفادي التداخل مع عناوين الترحيب المكتوبة باليمين
+              className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-[0_0_15px_rgba(56,189,248,0.2)] hover:scale-105 transition-transform"
             />
           </Link>
         </div>
