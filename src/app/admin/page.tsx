@@ -200,11 +200,18 @@ export default function AdminDashboard() {
     <main className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-12" dir="rtl">
       {/* هيدر اللوحة */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-slate-800 pb-6">
-        <div>
-          <h1 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500">
-            لوحة الإدارة المتكاملة | مريدي أفلييت
-          </h1>
-          <p className="text-slate-400 mt-1">التحكم الشامل بالمسوقين، المشاريع، والعمليات المالية بالريال القطري</p>
+        <div className="flex items-center gap-4">
+          <img 
+            src="/icon.png" 
+            alt="Maridi Studio" 
+            className="w-12 h-12 object-contain"
+          />
+          <div>
+            <h1 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500">
+              لوحة الإدارة المتكاملة | مريدي أفلييت
+            </h1>
+            <p className="text-slate-400 mt-1">التحكم الشامل بالمسوقين، المشاريع، والعمليات المالية بالريال القطري</p>
+          </div>
         </div>
         <button onClick={fetchData} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 rounded-xl border border-slate-800 text-sm font-semibold transition-all">
           تحديث البيانات الحية 🔄
