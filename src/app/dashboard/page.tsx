@@ -174,15 +174,26 @@ export default function MarketerDashboard() {
     <main className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-12" dir="rtl">
       {/* رأس الصفحة والهيدر */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4 border-b border-slate-800 pb-6">
-        <div>
-          <span className="text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-950/50 border border-sky-900 px-3 py-1 rounded-full">
-            حساب معتمد | {marketer?.tier_level}
-          </span>
-          <h1 className="text-3xl font-black text-white mt-2">
-            مرحباً بك يا {marketer?.name} 👋
-          </h1>
-          <p className="text-slate-400 text-sm mt-1">كود التسويق النشط الخاص بك: <span className="font-mono text-sky-400 font-bold">{marketer?.marketing_id}</span></p>
+        <div className="flex items-center gap-4">
+          {/* الشعار المفرغ الجديد */}
+          <img 
+            src="/icon.png" 
+            alt="Maridi Studio" 
+            className="w-14 h-14 object-contain"
+          />
+          <div>
+            <span className="text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-950/50 border border-sky-900 px-3 py-1 rounded-full inline-block">
+              حساب معتمد | {marketer?.tier_level}
+            </span>
+            <h1 className="text-3xl font-black text-white mt-2">
+              مرحباً بك يا {marketer?.name} 👋
+            </h1>
+            <p className="text-slate-400 text-sm mt-1">
+              كود التسويق النشط الخاص بك: <span className="font-mono text-sky-400 font-bold">{marketer?.marketing_id}</span>
+            </p>
+          </div>
         </div>
+
         <button
           onClick={() => { setIsLoggedIn(false); setInputCode(""); }}
           className="px-4 py-2 bg-slate-900 hover:bg-red-950/40 border border-slate-800 hover:border-red-900/30 text-slate-400 hover:text-red-400 rounded-xl text-xs font-bold transition-all"
