@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { supabase } from "@/lib/supabase"; 
+import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -68,9 +69,28 @@ export default function Home() {
         <h1 className="text-5xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-slate-100 to-blue-500 tracking-tight">
           مريدي أفلييت
         </h1>
-        <p className="text-slate-400 text-lg max-w-lg font-medium">
+        <p className="text-slate-400 text-lg max-w-lg font-medium mb-6">
           ابدأ رحلتك التسويقية معنا اليوم وسوّق لأقوى المشاريع التقنية الرقمية بعمولات فورية ومجزية.
         </p>
+
+        {/* أزرار التنقل السريع */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/guide"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-sky-300 hover:text-sky-200 text-sm font-bold border border-sky-500/30 transition-all duration-200 shadow-lg shadow-black/40 hover:border-sky-500/60"
+          >
+            <span>📘</span>
+            <span>دليل المسوق والأرباح</span>
+          </Link>
+
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white text-sm font-bold border border-slate-700 hover:border-slate-500 transition-all duration-200 shadow-lg shadow-black/40"
+          >
+            <span>🚀</span>
+            <span>لوحة تحكم المسوقين</span>
+          </Link>
+        </div>
       </div>
 
       {/* الكرت الرئيسي للموقع (Glassmorphic Card) */}
@@ -138,8 +158,17 @@ export default function Home() {
                     </svg>
                   </>
                 )}
-              </button>
+             </button>
             </form>
+
+            <div className="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between text-xs">
+              <Link href="/guide" className="text-sky-400 hover:text-sky-300 font-bold transition">
+                📘 كيف يعمل النظام ونسب العمولات؟
+              </Link>
+              <Link href="/dashboard" className="text-slate-400 hover:text-white font-medium transition">
+                مسجل مسبقاً؟ <span className="underline">دخول اللوحة</span>
+              </Link>
+            </div>
           </div>
         ) : (
           /* واجهة النجاح المبتكرة والسينمائية */
@@ -168,9 +197,25 @@ export default function Home() {
               <span className="text-2xl font-black font-mono text-sky-400 tracking-wider bg-clip-text">{myId}</span>
             </div>
 
-            <p className="text-amber-400 text-xs font-medium bg-amber-950/40 border border-amber-900/50 py-2.5 px-4 rounded-xl">
+            <p className="text-amber-400 text-xs font-medium bg-amber-950/40 border border-amber-900/50 py-2.5 px-4 rounded-xl mb-6">
               📢 سيتم مراجعة طلبك وتفعيله من قِبل المهندس محمد مريدي فوراً.
             </p>
+
+            <div className="space-y-3">
+              <Link
+                href="/guide"
+                className="block w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-sm transition shadow-lg shadow-sky-500/20 text-center"
+              >
+                قراءة دليل التسويق والنماذج الجاهزة 📘
+              </Link>
+              
+              <Link
+                href="/dashboard"
+                className="block w-full py-3 px-4 rounded-xl bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-300 hover:text-white font-semibold text-xs transition text-center"
+              >
+                الانتقال للوحة التحكم 🚀
+              </Link>
+            </div>
           </div>
         )}
       </div>

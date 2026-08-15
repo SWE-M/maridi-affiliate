@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
 interface MarketerData {
@@ -163,6 +164,15 @@ export default function MarketerDashboard() {
                 "دخول لوحة التحكم 🚀"
               )}
             </button>
+
+            <div className="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between text-xs">
+              <Link href="/guide" className="text-sky-400 hover:text-sky-300 font-bold transition">
+                📘 دليل المسوق والعمولات
+              </Link>
+              <Link href="/" className="text-slate-400 hover:text-white font-medium transition">
+                ليس لديك حساب؟ <span className="underline">انضم إلينا</span>
+              </Link>
+            </div>
           </form>
         </div>
       </main>
@@ -186,12 +196,39 @@ export default function MarketerDashboard() {
           </p>
         </div>
 
-        <button
-          onClick={() => { setIsLoggedIn(false); setInputCode(""); }}
-          className="px-4 py-2 bg-slate-900 hover:bg-red-950/40 border border-slate-800 hover:border-red-900/30 text-slate-400 hover:text-red-400 rounded-xl text-xs font-bold transition-all"
+        <div className="flex items-center gap-3">
+          <Link
+            href="/guide"
+            className="px-4 py-2.5 bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800/60 rounded-xl text-xs font-bold transition-all flex items-center gap-2"
+          >
+            <span>📘</span>
+            <span>دليل المسوق والنماذج</span>
+          </Link>
+
+          <button
+            onClick={() => { setIsLoggedIn(false); setInputCode(""); }}
+            className="px-4 py-2.5 bg-slate-900 hover:bg-red-950/40 border border-slate-800 hover:border-red-900/30 text-slate-400 hover:text-red-400 rounded-xl text-xs font-bold transition-all"
+          >
+            تسجيل الخروج ⬅️
+          </button>
+        </div>
+      </div>
+
+      {/* بانر إرشادي سريع للمسوق */}
+      <div className="mb-8 p-4 rounded-2xl bg-gradient-to-r from-blue-950/60 via-slate-900 to-indigo-950/60 border border-blue-800/40 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3 text-right">
+          <span className="text-2xl">💡</span>
+          <div>
+            <h3 className="text-sm font-bold text-white">هل تحتاج نماذج تسويقية جاهزة لنسخها والتسويق لبرنامج المغاسل؟</h3>
+            <p className="text-xs text-slate-400">تفضل بالاطلاع على الأسعار التقديرية ونصوص الواتساب الجاهزة لزيادة أرباحك.</p>
+          </div>
+        </div>
+        <Link
+          href="/guide"
+          className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs whitespace-nowrap transition-all shadow-md shadow-blue-900/40"
         >
-          تسجيل الخروج ⬅️
-        </button>
+          استعراض الدليل 📖
+        </Link>
       </div>
 
       {/* قسم الإحصائيات المالية المضيئة */}
