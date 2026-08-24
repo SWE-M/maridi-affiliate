@@ -38,6 +38,8 @@ export default function AdminDashboard() {
   const [projects, setProjects] = useState<ClientRequest[]>([]);
   const [withdrawals, setWithdrawals] = useState<Withdrawal[]>([]);
   const [loading, setLoading] = useState(true);
+  // 🔍 حالة جديدة لتخزين نص البحث
+  const [searchQuery, setSearchQuery] = useState("");
 
   // متغيرات مؤقتة لتحديث قيم المشروع عند إكماله
   const [editingProjectId, setEditingProjectId] = useState<number | null>(null);
@@ -68,6 +70,12 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchData();
   }, []);
+  // 🔍 فلترة المسوقين المعتمدين بناءً على نص البحث (الاسم، الجوال، الكود)
+  const filteredMarketers = activeMarketers.filter((m) =>
+    m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    m.marketing_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    m.phone_number.includes(searchQuery)
+  );
 
   // دالة تفعيل حساب مسوق
   const handleApproveMarketer = async (id: string) => {
@@ -276,9 +284,26 @@ export default function AdminDashboard() {
 
               {/* المعتمدين */}
               <section>
-                <h2 className="text-lg font-bold mb-4 text-emerald-400 flex items-center gap-2">✅ المسوقون المعتمدون ({activeMarketers.length})</h2>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+                  <h2 className="text-lg font-bold text-emerald-400 flex items-center gap-2">✅ المسوقون المعتمدون ({activeMarketers.length})</h2>
+                  
+                  {/* 🔍 شريط البحث الذكي */}
+                  <div className="w-full md:w-96 relative">
+                    <input
+                      type="text"
+                      placeholder="ابحث بالاسم، الكود، أو رقم الجوال..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-sky-500 transition-all placeholder-slate-500"
+                    />
+                    <span className="absolute left-3 top-2 text-slate-500">🔍</span>
+                  </div>
+                </div>
+
                 {activeMarketers.length === 0 ? (
                   <div className="bg-slate-900/40 p-6 rounded-2xl text-center text-slate-500 border border-slate-900">لم يتم اعتماد أي مسوق بعد.</div>
+                ) : filteredMarketers.length === 0 ? (
+                  <div className="bg-slate-900/40 p-6 rounded-2xl text-center text-slate-500 border border-slate-900">لا توجد نتائج تطابق بحثك "{searchQuery}".</div>
                 ) : (
                   <div className="overflow-x-auto bg-slate-900 rounded-2xl border border-slate-800">
                     <table className="w-full text-right border-collapse">
@@ -293,7 +318,7 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-800/40 text-xs">
-                        {activeMarketers.map(m => (
+                        {filteredMarketers.map(m => (
                           <tr key={m.marketing_id} className="hover:bg-slate-800/20">
                             <td className="p-4 font-mono font-bold text-sky-400">{m.marketing_id}</td>
                             <td className="p-4 font-bold text-white">{m.name}</td>
