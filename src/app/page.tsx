@@ -118,18 +118,17 @@ export default function Home() {
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-300 mb-2.5 mr-1">رقم الجوال (بدون فتح خط)</label>
+                <label className="block text-sm font-bold text-slate-300 mb-2.5 mr-1">رقم الجوال (مع رمز الدولة)</label>
                 <div className="relative">
-                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-sm border-r border-slate-800 pr-3 pl-1">QA</span>
                   <input
                     type="tel"
                     required
-                    pattern="[0-9]{8}"
-                    title="يرجى إدخال 8 أرقام"
+                    pattern="[\+0-9\s\-]{8,20}"
+                    title="يرجى إدخال رقم الجوال مع الرمز الدولي (مثال: +97455123456)"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-5 py-4 pl-16 rounded-2xl border border-slate-800 bg-slate-950/60 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 focus:bg-slate-950 outline-none transition-all duration-300 shadow-inner tracking-wide"
-                    placeholder="55XXXXXX"
+                    className="w-full px-5 py-4 rounded-2xl border border-slate-800 bg-slate-950/60 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 focus:bg-slate-950 outline-none transition-all duration-300 shadow-inner tracking-wide font-mono"
+                    placeholder="+974 55XX XXXX"
                     dir="ltr"
                   />
                 </div>
